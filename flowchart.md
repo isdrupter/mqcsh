@@ -1,9 +1,12 @@
+<pre>
 Program start -- |
+
+
           main_loop -- | - get_config()
                           - determine shell (bash, ash, sh)
                           - determine pub ip address (this will be ident)
                           - determine where to put temp files (/tmp/.mqsh)
-                       
+                         
                        | - mosquitto_run(host, user, password, ident, subscribe topic(s), publish topic(s), shell,)
                               | - mosquitto connect ( )
                                 | - receive command 
@@ -33,3 +36,4 @@ Program start -- |
                               - if so , we're done here
                               - if not, maybe usleep $(RANDOM microseconds) and try again?
                               
+</pre>
