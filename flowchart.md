@@ -29,4 +29,7 @@ Program start -- |
                        |-- publish(output, topics)
                          - base64 encode (input, encode)
                          - mosquitto_pub (base64_output)
-                           - return $? (exit status)
+                           - was that successful? 
+                              - if so , we're done here
+                              - if not, maybe usleep $(RANDOM microseconds) and try again?
+                              
