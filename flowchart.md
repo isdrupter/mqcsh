@@ -8,14 +8,15 @@ Program start -- |
                           - determine where to put temp files (/tmp/.mqsh)
                          
                        | - mosquitto_run(host, user, password, ident, subscribe topic(s), publish topic(s), shell,)
-                              | - mosquitto connect ( )
+                              | - mosquitto connect ( args )
                                 | - receive command 
                                     - pass to base64(  command, decode )
                                       - get output from base64 -
                                       - determine what to do with decoded cmd: 
-                                        - it is this a prefixed _SH_ command ? 
-                                          - pass to execute(json=no) 
-                                        - or not 
+                                        - it is this cmd prefixed with _SH_ ?
+                                           (  or _GET_, _UPDATE_, or some other flag ? - worry  about his later )
+                                          -then  pass to execute(json=no) 
+                                        - otherwise
                                           - pass to function execute(json=yes)
                        |--base64(input, mode)
                           - is mode decode? decode it, return decoded output
@@ -26,12 +27,12 @@ Program start -- |
                             - is this an _SH_ command ?
                               - if yes  pass output directly to publish
                               - if no, pass output to jsonify
-                       |--jsonify()
+                       |--jsonify(input)
                           -- formats shell output to json
-                          - pass output to publish()
+                          -- pass output to publish()
                        |-- publish(output, topics)
                          - base64 encode (input, encode)
-                         - mosquitto_pub (base64_output)
+                          - mosquitto_pub (base64_output)
                            - was that successful? 
                               - if so , we're done here
                               - if not, maybe usleep $(RANDOM microseconds) and try again?
